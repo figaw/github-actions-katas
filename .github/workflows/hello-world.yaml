@@ -45,6 +45,7 @@ jobs:
           path: .
   docker-image:
     runs-on: ubuntu-latest
+    needs: [build,test]
     steps:
       - name: Download Repo
         uses: actions/download-artifact@v2
