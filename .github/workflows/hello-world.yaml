@@ -6,7 +6,7 @@ name: Java CI
 on: push
 jobs:
   clone-down:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v2
       - name: Upload Repo
@@ -15,7 +15,7 @@ jobs:
           name: code
           path: .
   test:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     container: gradle:6-jdk11
     needs: [clone-down]
     steps:
@@ -29,7 +29,7 @@ jobs:
           chmod +x ci/unit-test-app.sh
           ci/unit-test-app.sh
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     container: gradle:6-jdk11
     needs: [clone-down]
     steps:
@@ -48,7 +48,7 @@ jobs:
           name: code
           path: .
   docker-image:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: [build,test]
     steps:
       - name: Download Repo
@@ -69,7 +69,7 @@ jobs:
           chmod +x ci/push-docker.sh
           ci/push-docker.sh
   component-test:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: [docker-image]
     steps:
       - name: Download Repo
