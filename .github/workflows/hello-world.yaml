@@ -62,7 +62,7 @@ jobs:
           ci/build-docker.sh
       - name: Push Image
         env:
-          GIT_COMMIT: "GA-$GITHUB_SHA"
+          GIT_COMMIT: "GA-${GITHUB_SHA}"
         run: | 
           chmod +x ci/push-docker.sh
           ci/push-docker.sh
