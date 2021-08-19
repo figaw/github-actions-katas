@@ -43,3 +43,24 @@ jobs:
         with:
           name: code
           path: .
+  docker-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Repo
+        uses: actions/download-artifact@v2
+        with:
+          name: code
+          path: .
+      - name: Build Image
+        env:
+          docker_username: ${{ secrets.DOCKER_USERNAME }}
+        run: | 
+          chmod +x ci/build-docker.sh
+          ci/build-docker.sh
+      - name: Push Image
+        env:
+          docker_username: ${{ secrets.DOCKER_USERNAME }}
+          docker_password: ${{ secrets.DOCKER_PASSWORD }}
+        run: | 
+          chmod +x ci/push-docker.sh
+          ci/push-docker.sh
